@@ -18,46 +18,46 @@ import javax.validation.Valid;
     public class HomeController {
 
         @Autowired
-        TODORepository todoRepository;
+        MODELCLASSRepository modelclassRepository;
 
         @RequestMapping("/")
         public String listTODOs(Model model){
-            model.addAttribute("todos", todoRepository.findAll());
+            model.addAttribute("modelclasss", modelclassRepository.findAll());
             return "list";
         }
 
         @GetMapping("/add")
-        public String todoForm(Model model){
-            model.addAttribute ("todo", new TODO());
-            return "todoform";
+        public String modelclassForm(Model model){
+            model.addAttribute ("modelclass", new ModelClass());
+            return "modelclass";
         }
 
         @PostMapping("/process")
-        public String processForm(@Valid TODO todo,
+        public String processForm(@Valid ModelClass modelclass,
           BindingResult result){
             if (result.hasErrors( )){
-                return "todoform";
+                return "modelclass";
             }
-            todoRepository.save(todo);
+            modelclassRepository.save(modelclass);
             return "redirect:/";
         }
 
         @RequestMapping("/detail/{id}")
         public String showTODO(@PathVariable("id") long id, Model model) {
-            model.addAttribute("todo", todoRepository.findById(id).get());
+            model.addAttribute("todo", modelclassRepository.findById(id).get());
             return "show";
         }
 
         @RequestMapping("/update/{id}")
         public String updateTODO(@PathVariable("id") long id,
                                    Model model) {
-            model.addAttribute("todo", todoRepository.findById(id).get());
-            return "todoform";
+            model.addAttribute("modelclass", modelclassRepository.findById(id).get());
+            return "modelclass";
         }
 
         @RequestMapping("/delete/{id}")
         public String delTODO(@PathVariable("id") long id) {
-            todoRepository.deleteById(id);
+            modelclassRepository.deleteById(id);
             return "redirect:/";
         }
     }
